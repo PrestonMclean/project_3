@@ -34,8 +34,6 @@ footer {
 	border-top: 2px dotted #678f89;
 }
 
-
-
 /* ==========================================================================
    Button Styles
    ========================================================================== */
@@ -196,6 +194,7 @@ form label {
 form input[type=text],
 form input[type=password],
 form input[type=date],
+form input[type=checkbox],
 form textarea {
 	border: 2px solid #e1e1e1;
 	font-size: 18px;
@@ -208,14 +207,24 @@ form textarea {
 form input[type=text]:focus,
 form input[type=date]:focus,
 form input[type=password]:focus,
+form input[type=checkbox]:focus,
 form textarea:focus {
 	outline: 0;
 	border-color: #678f89;
 }
 form input[type=text]:hover,
-form input[type=date]:hover
+form input[type=date]:hover,
+form input[type=checkbox]:hover,
 form textarea:hover {
 	border-color: #678f89;
+}
+form input[type=checkbox] {
+	display: inline-block;
+	width: 5%;
+}
+.tag{
+	display: inline-block;
+	width: 30%;
 }
 .edit-entry form textarea,
 .new-entry form textarea {
@@ -224,17 +233,9 @@ form textarea:hover {
 input[type=submit] {
 	margin-right: 5px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#tag_list {
+	display: block;
+	width: 10%;
+	margin: auto;
+	text-align:left
+}
