@@ -29,13 +29,13 @@ if(isset($_POST['delete'])) {
                             echo "<li><a href='index.php?tag=". $tag ."'>" . ($tag) . "</a></li>";
                           }
                           echo "</ul>";
-                          echo "<form method=post action='index.php' onsubmit=\"return confirm('Are you sure you want tot delete this project?');\">\n";
-                          echo "<input type='hidden' value='" . $entry['id'] . "' name='delete' />\n";
-                          echo "<input type='submit' class='button--delete' value='Delete' />\n";
-                          echo "</form>\n";
                           echo "<time datetime='". date( 'Y-m-d' , strtotime($entry['date'])) ."'>";
                              echo date( 'F j, Y' , strtotime($entry['date']));
                           echo "</time>\n";
+                          echo "<form method=post action='index.php' onsubmit=\"return confirm('Are you sure you want tot delete this project?');\">\n";
+                          echo "<input type='hidden' value='" . $entry['id'] . "' name='delete' />\n";
+                          echo "<input type='submit' class='button button-delete' value='Delete' />\n";
+                          echo "</form>\n";
                       echo "</article>\n";
                     }
                   ?>
