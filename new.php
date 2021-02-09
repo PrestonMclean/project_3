@@ -1,36 +1,40 @@
 <?php
 include('inc/header.php');
 
-list($id, $title, $date, $time_spent, $learned, $resources) = get_entry(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
+$id = $title = $date = $time_spent = $learned = $resources = $tags = '';
 
-if ($id) {
-$tags = get_tags($id);
+if (isset($_GET['id'])) {
+  // get all columns of entry and set each to thier own variable
+  list($id, $title, $date, $time_spent, $learned, $resources) = get_entry(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
+  // set $tags to an array of all the tags of the entry
+  $tags = get_tags($id);
 }
 
+// if form has been submited
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-    $title = trim(filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING));
-    $date = trim(filter_input(INPUT_POST, 'date', FILTER_SANITIZE_STRING));
-    $time_spent = filter_input(INPUT_POST, 'timeSpent', FILTER_SANITIZE_STRING);
-    $learned = filter_input(INPUT_POST, 'whatILearned', FILTER_SANITIZE_STRING);
-    $resources = filter_input(INPUT_POST, 'ResourcesToRemember', FILTER_SANITIZE_STRING);
-    $tags = null;
-    foreach (get_all_tags() as $tag) {
-      if (!empty($_POST[$tag['id']])) {
-        $tags[] = $_POST[$tag['id']];
-      }
+  // set the submited values to variables
+  $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+  $title = trim(filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING));
+  $date = trim(filter_input(INPUT_POST, 'date', FILTER_SANITIZE_STRING));
+  $time_spent = filter_input(INPUT_POST, 'timeSpent', FILTER_SANITIZE_STRING);
+  $learned = filter_input(INPUT_POST, 'whatILearned', FILTER_SANITIZE_STRING);
+  $resources = filter_input(INPUT_POST, 'ResourcesToRemember', FILTER_SANITIZE_STRING);
+  $tags = null;
+  foreach (get_all_tags() as $tag) {
+    if (!empty($_POST[$tag['id']])) {
+      $tags[] = $_POST[$tag['id']];
     }
-
-    if (empty($title) || empty($date) || empty($time_spent) || empty($learned) || empty($resources) || empty($tags)) {
-        $error_message = 'Please make sure to fill in the required fields: Title, Date, Time spent, What I Learned, Resources to Remember, and Tags';
+  }
+  if (empty($title) || empty($date) || empty($time_spent) || empty($learned) || empty($resources) || empty($tags)) {
+    $error_message = 'Please make sure to fill in the required fields: Title, Date, Time spent, What I Learned, Resources to Remember, and Tags';
+  } else {
+    if (add_entry($title, $date, $time_spent, $learned, $resources, $tags, $id)) {
+      header('Location: index.php');
+      exit;
     } else {
-        if (add_entry($title, $date, $time_spent, $learned, $resources, $tags, $id)) {
-            header('Location: index.php');
-            exit;
-        } else {
-            $error_message = 'Could not add project';
-        }
+      $error_message = 'Could not add project';
     }
+  }
 }
 
 ?>
