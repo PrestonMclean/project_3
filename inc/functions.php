@@ -14,7 +14,7 @@ function get_tags($id)
       ');
     $results->bindValue(1, $id);
     $results->execute();
-  } catch (Eception $e) {
+  } catch (Exception $e) {
     echo 'Error: ' . $e->getMessage();
     return(array());
   }
@@ -34,7 +34,7 @@ function get_all_tags() {
     // select all the posible tags
     $results = $db->prepare('SELECT * FROM tags');
     $results->execute();
-  } catch (Eception $e) {
+  } catch (Exception $e) {
     echo 'Error: ' . $e->getMessage();
     return(array());
   }
@@ -65,7 +65,7 @@ function get_entries($filter = null)
       $results = $db->prepare($sql . $order);
     }
     $results->execute();
-  } catch (Eception $e) {
+  } catch (Exception $e) {
     echo 'Error: ' . $e->getMessage();
     return(array());
   }
@@ -83,7 +83,7 @@ function get_entry($id)
     $results = $db->prepare('SELECT * FROM entries WHERE id = ?');
     $results->bindValue(1, $id);
     $results->execute();
-  } catch (Eception $e) {
+  } catch (Exception $e) {
     echo 'Error: ' . $e->getMessage();
     return false;
   }
@@ -223,7 +223,7 @@ function delete_tags($id) {
     $results = $db->prepare('DELETE FROM tags_entry WHERE entry_id = ?');
     $results->bindValue(1, $id);
     $results->execute();
-  } catch (Eception $e) {
+  } catch (Exception $e) {
     echo 'Error: ' . $e->getMessage();
     return false;
   }
@@ -242,7 +242,7 @@ function delete_entry($id)
     if (!delete_tags($id)) {
       return false;
     }
-  } catch (Eception $e) {
+  } catch (Exception $e) {
     echo 'Error: ' . $e->getMessage();
     return false;
   }
